@@ -224,4 +224,78 @@ public void save(Contato contato){
  
  return contatos;
  }
+ 
+ 
+ 
+ public List<Contato> getContatos2(int id){
+	 
+ String sql = "SELECT * FROM contatos where ID = ?";
+ 
+ List<Contato> contatos = new ArrayList<Contato>();
+ 
+ Connection conn = null;
+ PreparedStatement pstm = null;
+ //Classe que vai recuperar os dados do banco de dados
+ ResultSet rset = null;
+ 
+ try {
+ conn = ConnectionFactory.createConnectionToMySQL();
+ 
+ pstm = conn.prepareStatement(sql);
+ 
+ pstm.setInt(1,id);
+ 
+ rset = pstm.executeQuery();
+ 
+ //Enquanto existir dados no banco de dados, faça
+ while(rset.next()){
+ 
+ Contato contato = new Contato();
+ 
+ //Recupera o id do banco e atribui ele ao objeto
+ contato.setId(rset.getInt("id"));
+ 
+ //Recupera o nome do banco e atribui ele ao objeto
+ contato.setNome(rset.getString("nome"));
+ 
+ //Recupera a idade do banco e atribui ele ao objeto
+ contato.setIdade(rset.getInt("idade"));
+ 
+ //Recupera a data do banco e atribui ela ao objeto
+ contato.setDataCadastro(rset.getDate("dataCadastro"));
+ 
+ //Adiciono o contato recuperado, a lista de contatos
+ contatos.add(contato);
+ }
+ } catch (Exception e) {
+ 
+ e.printStackTrace();
+ }finally{
+ 
+ try{
+ 
+ if(rset != null){
+ 
+ rset.close();
+ }
+ 
+ if(pstm != null){
+ 
+ pstm.close();
+ }
+ 
+ if(conn != null){
+ conn.close();
+ }
+ 
+ }catch(Exception e){
+ 
+ e.printStackTrace();
+ }
+ }
+ 
+ return contatos;
+ }
+ 
+ 
 }

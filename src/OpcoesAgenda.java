@@ -13,18 +13,19 @@ public class OpcoesAgenda {
 
 		String v_nome;
 		int v_idade;
-		int v_opcao;
+		int v_opcao = 0;
 		int v_id;
 
 		
-		
+		while (v_opcao != 9) {		
 		Scanner sc = new Scanner(System.in);
-		System.out.println("* BEM VINDO AO CADASTRO DE AGENDA\n"
+		System.out.println("* BEM VINDO AO CADASTRO DE AGENDA *\n"
 				+ "ESCOLHA UMA DAS OPÇÕES ABAIXO:\n"
 				+ "1 - CADASTRAR UM NOVO CONTATO\n"
 				+ "2 - SELECIONAR CONTATO EXISTENTE\n"
 				+ "3 - ATUALIZAR UM CONTATO EXISTENTE\n"
-				+ "4 - LISTA DE TODOS CONTATOS\n");
+				+ "4 - LISTA DE TODOS CONTATOS\n"
+				+ "9 - SAIR DO PROGRAMA");
 		v_opcao = sc.nextInt();
 
 		
@@ -49,12 +50,23 @@ public class OpcoesAgenda {
 		} 
 		// CONSULTANDO CONTATO EXISTENTE
 		else if (v_opcao ==2) {
+			
+			// TODO Auto-generated method stub
+						ContatoDAO contatoDAO = new ContatoDAO();
+			
 			System.out.println("Digite ID do contato:");
 			v_id = sc.nextInt();
 			
-			//contatoDAO.getContatos();
+			contatoDAO.getContatos2(v_id);
 				 
-			//System.out.println("NOME: " + c.getNome());
+			System.out.println("ID  | NOME ");
+			 for(Contato c : contatoDAO.getContatos2(v_id)){
+				 				 
+				 //System.out.println("ID: "+ c.getId()+ " | NOME: " + c.getNome());
+				 System.out.println( c.getId()+ " | " + c.getNome());
+			 
+			
+		}
 			
 		}
 		
@@ -63,16 +75,20 @@ public class OpcoesAgenda {
 
 			// TODO Auto-generated method stub
 			ContatoDAO contatoDAO = new ContatoDAO();
+			
+			System.out.println("ID  | NOME ");
 			 for(Contato c : contatoDAO.getContatos()){
-				 
-				 System.out.println("NOME: " + c.getNome());
+				 				 
+				 //System.out.println("ID: "+ c.getId()+ " | NOME: " + c.getNome());
+				 System.out.println( c.getId()+ " | " + c.getNome());
 			 
 			
 		}
 
 		}
-		 sc.close();
-		
+		sc.close();
+		}	
+		 
 	}
-				
+		
 }
